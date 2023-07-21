@@ -14,6 +14,7 @@ class Product(models.Model):
     installation_process = models.TextField()
     additional_benefits = models.TextField()
     image = models.ImageField(upload_to='product/', blank=True)
+    video_url = models.TextField(blank=True)
 
     def get_url(self):
         return reverse('package_details', args={self.slug

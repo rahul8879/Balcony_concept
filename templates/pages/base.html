@@ -27,37 +27,101 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'utils.js'%}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 
-    <script>
-        // JavaScript to capture user location
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
+<script>
+   
+      // Toggle chat panel when the chat icon is clicked
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('called 1')
+            document.getElementById('chat-icon').addEventListener('click', function () {
+                console.log('called 2')
+                var chatPanel = document.getElementById('chat-panel');
+                chatPanel.style.display = chatPanel.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    $(document).ready(function () {
+        console.log('JS working')
+        $("#bookingForm").submit(function (event) {
+            event.preventDefault(); // Prevent form submission to the server
 
-                    // Get the capture URL from the data attribute
-                    var captureUrl = document.getElementById('location-data').getAttribute('data-capture-url');
+            // Show the loader
+            $(".loader").show();
 
-                    // Send the latitude and longitude to the Django view using Fetch API
-                    fetch(captureUrl, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRFToken": "{{ csrf_token }}",  // Include the CSRF token for security
-                        },
-                        body: JSON.stringify({  // Send the data as JSON in the request body
-                            latitude: latitude,
-                            longitude: longitude,
-                        }),
-                    });
+            // Get form data
+            var formData = $(this).serialize();
+
+            // Get the slug from the URL
+            var url = window.location.href; // Get the complete URL
+            console.log('url:', url)
+            var slugIndex = url.lastIndexOf('/') + 1; // Find the last occurrence of "/"
+            var slug = url.slice(slugIndex); // Extract the slug from the URL
+
+            // Append the slug to the URL
+            var submitUrl = url + "submit_booking"+"?" + formData  ; // Replace with the actual URL to your Django view
+            console.log('submitUrl:', submitUrl)
+            // AJAX form submission
+            $.ajax({
+                type: "GET",
+                url: submitUrl,
+                data: formData,
+                success: function (response) {
+                    // Hide the loader
+                    $(".loader").hide();
+                    // Show the confirmation message
+                    $(".confirmation-message").html(response.message).show();
+
+                    // Clear the form data
+                    $("#bookingForm")[0].reset();
+
                 },
-                function (error) {
-                    // Handle error if geolocation is not available or user denies the request
+                error: function (xhr, status, error) {
+                    // Hide the loader
+                    $(".loader").hide();
+
                 }
-            );
-        }
-    </script>
+            });
+
+            // Log form submitted
+            console.log("Form submitted.");
+        });
+    });
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+   /* Styles for the chat icon container */
+    .chat-icon-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #25D366; /* WhatsApp green color */
+      border-radius: 50%;
+      padding: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+    }
+
+    /* Styles for the chat icon */
+    .chat-icon {
+      color: #fff;
+      font-size: 24px;
+    }
+    /* Center the loader */
+    .loader-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+</style>
+
+
     <title>Invisible Grill : </title>
 </head>
 
@@ -140,9 +204,12 @@
                                     <li class="menu-item-has-children">
                                         <a href="index.html">Services</a>
                                         <ul>
+                                            {% for product in all_product%}
                                             <li>
-                                                <a href="package.html">Service 1</a>
+                                                <!-- <a href="{{i.product.get_url}}">{{i.name}}</a> -->
+                                                <a href="{{product.get_url}}">{{product.name}}</a>
                                             </li>
+                                            {% endfor %}
 
                                         </ul>
                                     </li>
@@ -153,11 +220,6 @@
                                 </ul>
                             </nav>
                         </div>
-
-
-
-
-
 
                         <div class="header-btn">
                             <a href="#" class="round-btn" id="get-quote-btn">Get Quote</a>
@@ -191,7 +253,8 @@
         </header>
 
         {% block content %}{% endblock %}
-
+        
+       
 
         <footer id="colophon" class="site-footer footer-primary">
             <div class="top-footer">
@@ -371,11 +434,17 @@
                     </div>
                 </div>
             </div>
-            <div class="bottom-footer">
-                <div class="container">
-                    <div class="copy-right text-center">Copyright &copy; 2023 Balcony Concept. All rights reserved.</div>
-                </div>
+       
+
+        <div class="chat-icon-container" onclick="openWhatsApp()">
+            <!-- WhatsApp chat icon -->
+            <div class="chat-icon">
+                <i class="fa fa-whatsapp" style="font-size:24px"></i>
             </div>
+        </div>
+        
+        
+    </div>
         </footer>
 
 <!-- JavaScript -->
@@ -391,3 +460,5 @@
 <script src="{% static 'assets/vendors/fancybox/dist/jquery.fancybox.min.js' %}"></script>
 <script src="{% static 'assets/vendors/slick-nav/jquery.slicknav.js' %}"></script>
 <script src="{% static 'assets/js/custom.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
