@@ -1,0 +1,120 @@
+{% extends 'pages/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<!-- ***site header html end*** -->
+<main id="content" class="site-main">
+    <section class="package-inner-page">
+        <!-- ***Inner Banner html start form here*** -->
+        <div class="inner-banner-wrap">
+            <div class="inner-baner-container" style="background-image: url({{ single_product.image.url }});">
+                <div class="container">
+                    <div class="inner-banner-content">
+                        <h1 class="page-title">{{single_product.name}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ***Inner Banner html end here*** -->
+        <!-- ***career section html start form here*** -->
+        <div class="inner-package-detail-wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 primary right-sidebar">
+                        <div class="single-packge-wrap">
+                            <div class="single-package-head d-flex align-items-center">
+                              
+                            </div>
+                           
+                            <!-- <figure class="single-package-image">
+                                <img src="assets/images/img27.jpg" alt="">
+                            </figure> -->
+                            <div class="package-content-detail">
+                                <article class="package-overview">
+                                    <h3>OVERVIEW :</h3>
+                                    <div style="white-space: pre-line;">
+                                        {{ single_product.description|linebreaksbr }}
+                                    </div>
+                                </article>
+                                <article class="package-include bg-light-grey">
+                                    <h3>Material Used :</h3>
+                                    <ul>
+                                    {% for material_item in material %}
+                                    <li><i class="fas fa-check"></i>{{ material_item }}</li>
+                                    {% endfor %}
+                                      
+                                    </ul>
+                                </article>
+                                <article class="package-include bg-light-grey">
+                                    <h3>Dimensions :</h3>
+                                    <ul>
+                                       
+                                        <li><i class="fas fa-check"></i>{{ single_product.dimensions }}</li>
+                                        
+                                
+                                    </ul>
+                                </article>
+
+                                <article class="package-include bg-light-grey">
+                                    <h3>Health Benefits :</h3>
+                                    <ul>
+                                        {% for material_item in health %}
+                                        <li><i class="fas fa-check"></i>{{ material_item }}</li>
+                                        {% endfor %}
+                                
+                                    </ul>
+                                </article>
+                                
+
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="sidebar">
+                            <div class="booking-form-wrap">
+                                <div class="booking-form-inner primary-bg">
+                                    <h3>Install Your {{single_product.name}} Today</h3>
+                                    <p>Enhance your home with the ultimate security and elegance – install our cutting-edge {{single_product.name}} today! Safeguard
+                                    your loved ones without compromising on the view. Connect with us to turn your living space into a secure and stylish
+                                    sanctuary!.</p>
+                                    <form method="get" class="booking-form">
+                                        <p>
+                                            <input type="text" name="name" placeholder="Your Name...">
+                                        </p>
+                                        <p>
+                                            <input type="email" name="email" placeholder="Your Mobile number...">
+                                        </p>
+                                        
+                                        <p>
+                                            <button type="submit" class="outline-btn outline-btn-white">SUBMIT
+                                                NOW</button>
+                                        </p>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="package-list">
+                                <div class="overlay"></div>
+                                <h4>OTHER PRODUCTS</h4>
+                                <ul>
+                                    {% for i in all_product%}
+                                    <li>
+                                        <a href="#"><i aria-hidden="true"
+                                                class="icon icon-arrow-right-circle"></i>{{i.name}}</a>
+                                    </li>
+                                    {% endfor %}
+                                  
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ***career section html start form here*** -->
+    </section>
+</main>
+{% endblock %}

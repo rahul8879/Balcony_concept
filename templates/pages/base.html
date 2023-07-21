@@ -1,0 +1,393 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendors/bootstrap/css/bootstrap.min.css' %}" media="all">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/jquery-ui/jquery-ui.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/fancybox/dist/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'assets/vendors/elementskit-icon-pack/assets/css/ekiticons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendors/slick/slick-theme.css' %}">
+    <!-- google fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css'%}">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'utils.js'%}"></script>
+
+    <script>
+        // JavaScript to capture user location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    // Get the capture URL from the data attribute
+                    var captureUrl = document.getElementById('location-data').getAttribute('data-capture-url');
+
+                    // Send the latitude and longitude to the Django view using Fetch API
+                    fetch(captureUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": "{{ csrf_token }}",  // Include the CSRF token for security
+                        },
+                        body: JSON.stringify({  // Send the data as JSON in the request body
+                            latitude: latitude,
+                            longitude: longitude,
+                        }),
+                    });
+                },
+                function (error) {
+                    // Handle error if geolocation is not available or user denies the request
+                }
+            );
+        }
+    </script>
+    <title>Invisible Grill : </title>
+</head>
+
+<body class="home">
+    <div id="siteLoader" class="site-loader">
+        <div class="preloader-content">
+            <img src="{% static 'assets/images/loader1.gif'%}" alt="">
+        </div>
+    </div>
+    <div id="page" class="page">
+        <!-- site header html start  -->
+        <header id="masthead" class="site-header">
+            <!-- header html start -->
+            <div class="top-header">
+                <div class="container">
+                    <div class="top-header-inner">
+                        <div class="header-contact text-left">
+                            <a href="tel:+919821512725">
+                                <i aria-hidden="true" class="icon icon-phone-call2"></i>
+                                <div class="header-contact-details">
+                                    <span class="contact-label">For Further Inquires :</span>
+                                    <h5 class="header-contact-no">+91 9821512725</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-logo text-center">
+                            <h1 class="site-title">
+                                <a href="/">
+                                    <img src="{% static 'assets/images/logo_3.png' %}" alt="Test">
+                                </a>
+                            </h1>
+                        </div>
+                        <div class="header-icon text-right">
+                            <!-- <div class="header-search-icon d-inline-block">
+                                <a href="#">
+                                    <i aria-hidden="true" class="fas fa-search"></i>
+                                </a>
+                            </div> -->
+                            <div class="offcanvas-menu d-inline-block">
+                                <a href="#">
+                                    <i aria-hidden="true" class="icon icon-burger-menu"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-header">
+                <div class="container">
+                    <div class="bottom-header-inner d-flex justify-content-between align-items-center">
+                        <div class="header-social social-icon">
+                            <ul>
+                                <li>
+                                    <a href="https://www.facebook.com" target="_blank">
+                                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.twitter.com" target="_blank">
+                                        <i class="fab fa-twitter" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com" target="_blank">
+                                        <i class="fab fa-youtube" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="navigation-container d-none d-lg-block">
+                            <nav id="navigation" class="navigation">
+                                <ul>
+                                    <li class="menu-active">
+                                        <a href="index.html">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="about.html">about us</a>
+                                    </li>
+
+                                    <li class="menu-item-has-children">
+                                        <a href="index.html">Services</a>
+                                        <ul>
+                                            <li>
+                                                <a href="package.html">Service 1</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <a href="contact.html">contact us</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+
+
+
+
+
+                        <div class="header-btn">
+                            <a href="#" class="round-btn" id="get-quote-btn">Get Quote</a>
+                        </div>
+
+                        <!-- Modal HTML -->
+
+                        <div class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h5>Please Fill below details</h5>
+                                <form method="POST" action="{% url 'quote_submit' %}">
+                                    {% csrf_token %}
+                                    <!-- Name field -->
+                                    <input type="text" name="name" placeholder="Name" required><br>
+                                    <!-- Mobile Number field -->
+                                    <input type="text" name="mobile_number" placeholder="Mobile Number" required>
+                                    <!-- Other required fields -->
+                                    <!-- ... -->
+
+                                    <!-- Submit button -->
+                                    <input type="submit" value="Submit">
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Modal HTML ENds -->
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-menu-container"></div>
+        </header>
+
+        {% block content %}{% endblock %}
+
+
+        <footer id="colophon" class="site-footer footer-primary">
+            <div class="top-footer">
+                <div class="container">
+                    <div class="upper-footer">
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-6">
+                                <aside class="widget widget_text">
+                                    <div class="footer-logo">
+                                        <a href="index.html"><img src="{%  static 'assets/images/logo_4.png' %}" alt=""></a>
+                                    </div>
+                                    <div class="textwidget widget-text">
+                                        We specialize in transforming your living spaces with cutting-edge products like Invisible Grills and Monsoon Blinds.
+                                        Elevate your home's safety and aesthetics with our seamless installations. Experience the perfect harmony of style and
+                                        security with us!.
+                                    </div>
+                                </aside>
+                            </div>
+                            <!-- <div class="col-lg-3 col-sm-6">
+                                <aside class="widget widget_latest_post widget-post-thumb">
+                                    <h3 class="widget-title">RECENT POST</h3>
+                                    <ul>
+                                        <li>
+                                            <figure class="post-thumb">
+                                                <a href="blog-archive.html"><img src="assets/images/img21.jpg" alt=""></a>
+                                            </figure>
+                                            <div class="post-content">
+                                                <h6>
+                                                    <a href="blog-single.html">BEST JOURNEY TO PEACEFUL PLACES</a>
+                                                </h6>
+                                                <div class="entry-meta">
+                                                    <span class="posted-on">
+                                                        <a href="blog-archive.html">February 17, 2022</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <figure class="post-thumb">
+                                                <a href="blog-archive.html"><img src="assets/images/img22.jpg" alt=""></a>
+                                            </figure>
+                                            <div class="post-content">
+                                                <h6>
+                                                    <a href="blog-single.html">TRAVEL WITH FRIENDS IS BEST</a>
+                                                </h6>
+                                                <div class="entry-meta">
+                                                    <span class="posted-on">
+                                                        <a href="blog-archive.html">February 17, 2022</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </aside>
+                            </div> -->
+                            <div class="col-lg-3 col-sm-6">
+                                <aside class="widget widget_text">
+                                    <h3 class="widget-title">CONTACT US</h3>
+                                    <div class="textwidget widget-text">
+                                        <p>Feel free to contact and<br /> reach us !!</p>
+                                        <ul>
+                                            <li>
+                                                <a href="tel:+919821512725">
+                                                    <i aria-hidden="true" class="icon icon-phone1"></i>
+                                                    +91 9821 5127 25
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="mailtop:info@balconyconcept.com">
+                                                    <i aria-hidden="true" class="icon icon-envelope1"></i>
+                                                    info@balconyconcept.com
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <i aria-hidden="true" class="icon icon-map-marker1"></i>
+                                                Mumbai - Jogeshwari
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </aside>
+                            </div>
+                            <div class="col-lg-3 col-sm-6">
+                                <aside class="widget">
+                                    <h3 class="widget-title">Gallery</h3>
+                                    <div class="gallery gallery-colum-3">
+                                        <figure class="gallery-item">
+                                            <a href="assets/images/img10.jpg" data-fancybox="gallery-1">
+                                                <img src="assets/images/img21.jpg" alt="">
+                                            </a>
+                                        </figure>
+                                        <figure class="gallery-item">
+                                            <a href="assets/images/img28.jpg" data-fancybox="gallery-1">
+                                                <img src="assets/images/img22.jpg" alt="">
+                                            </a>
+                                        </figure>
+                                        <figure class="gallery-item">
+                                            <a href="assets/images/img14.jpg" data-fancybox="gallery-1">
+                                                <img src="assets/images/img23.jpg" alt="">
+                                            </a>
+                                        </figure>
+                                        <figure class="gallery-item">
+                                            <a href="assets/images/img15.jpg" data-fancybox="gallery-1">
+                                                <img src="assets/images/img24.jpg" alt="">
+                                            </a>
+                                        </figure>
+                                        <figure class="gallery-item">
+                                            <a href="assets/images/img12.jpg" data-fancybox="gallery-1">
+                                                <img src="assets/images/img25.jpg" alt="">
+                                            </a>
+                                        </figure>
+                                        <figure class="gallery-item">
+                                            <a href="assets/images/img13.jpg" data-fancybox="gallery-1">
+                                                <img src="assets/images/img26.jpg" alt="">
+                                            </a>
+                                        </figure>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lower-footer">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <div class="footer-newsletter">
+                                    <p>Subscribe our newsletter for more update & news !!</p>
+                                    <form class="newsletter">
+                                        <input type="email" name="email" placeholder="Enter Your Email">
+                                        <button type="submit" class="outline-btn outline-btn-white">Subscribe</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 text-right">
+                                <div class="social-icon">
+                                    <ul>
+                                        <li>
+                                            <a href="https://www.facebook.com/" target="_blank">
+                                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.twitter.com/" target="_blank">
+                                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.youtube.com/" target="_blank">
+                                                <i class="fab fa-youtube" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.instagram.com/" target="_blank">
+                                                <i class="fab fa-instagram" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.linkedin.com/" target="_blank">
+                                                <i class="fab fa-linkedin" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="footer-menu">
+                                    <ul>
+                                        <li>
+                                            <a href="/">Privacy Policy</a>
+                                        </li>
+                                        <li>
+                                            <a href="/">Term & Condition</a>
+                                        </li>
+                                        <li>
+                                            <a href="/">FAQ</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-footer">
+                <div class="container">
+                    <div class="copy-right text-center">Copyright &copy; 2023 Balcony Concept. All rights reserved.</div>
+                </div>
+            </div>
+        </footer>
+
+<!-- JavaScript -->
+<script src="{%static 'assets/vendors/jquery/jquery.js' %}"></script>
+<script src="{% static 'assets/vendors/waypoint/waypoints.js' %}"></script>
+<script src="{% static 'assets/vendors/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static 'assets/vendors/countdown-date-loop-counter/loopcounter.js' %}"></script>
+<script src="{% static 'assets/vendors/counterup/jquery.counterup.min.js' %}"></script>
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script src="{% static 'assets/vendors/masonry/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'assets/vendors/slick/slick.min.js' %}"></script>
+<script src="{% static 'assets/vendors/fancybox/dist/jquery.fancybox.min.js' %}"></script>
+<script src="{% static 'assets/vendors/slick-nav/jquery.slicknav.js' %}"></script>
+<script src="{% static 'assets/js/custom.min.js' %}"></script>
