@@ -31,7 +31,18 @@
                             <!-- <figure class="single-package-image">
                                 <img src="assets/images/img27.jpg" alt="">
                             </figure> -->
+                            
                             <div class="package-content-detail">
+                            {% if single_product.video_url %}
+                            <article class="package-video">
+                                <h3>Product Video:</h3>
+                                <div class="video-container">
+                                <iframe width="420" height="345" src="{{single_product.video_url}}">
+                                </iframe>
+                                </div>
+                            </article>
+                            {% endif %}
+
                                 <article class="package-overview">
                                     <h3>OVERVIEW :</h3>
                                     <div style="white-space: pre-line;">
@@ -80,19 +91,32 @@
                                     <p>Enhance your home with the ultimate security and elegance – install our cutting-edge {{single_product.name}} today! Safeguard
                                     your loved ones without compromising on the view. Connect with us to turn your living space into a secure and stylish
                                     sanctuary!.</p>
-                                    <form method="get" class="booking-form">
+                                    <form id="bookingForm" method="get" class="booking-form">
                                         <p>
                                             <input type="text" name="name" placeholder="Your Name...">
                                         </p>
                                         <p>
-                                            <input type="email" name="email" placeholder="Your Mobile number...">
+                                            <input type="tel" name="email" placeholder="Your Mobile number...">
                                         </p>
-                                        
+
                                         <p>
                                             <button type="submit" class="outline-btn outline-btn-white">SUBMIT
                                                 NOW</button>
                                         </p>
+
+                                        <!-- Loader -->
+                                        <div class="loader" style="display: none;">
+                                        <div class="progress" style="width: 200px;">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100"
+                                                aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                                        </div>
+                                        </div>
+                                        
+                                        
+                                        <!-- Confirmation message -->
+                                        <div class="confirmation-message" style="display: none; color: white;"></div>
                                     </form>
+
                                 </div>
                             </div>
                             
