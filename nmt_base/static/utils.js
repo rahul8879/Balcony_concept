@@ -18,6 +18,66 @@ $(document).ready(function() {
         $('.modal').fadeIn();
         console.log('Modal shown.');
     });
+
+   // Function to show the "Thank you" popup
+    // function showThankYouPopup() {
+    //   console.log('Show thank you popup called');
+    //   var popup = document.createElement("div");
+    //   popup.innerHTML = "Thank you";
+    //   // Add any desired styles to the popup element
+    //   document.body.appendChild(popup);
+    //   setTimeout(function() {
+    //     document.body.removeChild(popup);
+    //   }, 5000); // Remove the popup after 5 seconds
+    // }
+
+     // Function to show the second modal (thank you popup)
+       // Function to show the second modal (thank you popup) with response message
+      function showThankYouPopup(responseMessage) {
+        $('#thankYouModal .thank-you-text').text(responseMessage);
+        $('.thank-you-modal').fadeIn();
+        setTimeout(function() {
+          hideThankYouPopup();
+        }, 5000); // Automatically hide the second modal after 5 seconds
+      }
+
+       // Function to hide the second modal (thank you popup)
+      function hideThankYouPopup() {
+        $('.thank-you-modal').fadeOut();
+      }
+
+    // Function to handle form submission
+    function handleSubmit(event) {
+      event.preventDefault();
+      var form = event.target;
+      // Send the form data to your Django API using fetch
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+      })
+        .then(function(response) {
+          return response.json(); // Parse response as JSON
+        })
+        .then(function(data) {
+          console.log('API Response:', data); // Log the API response for debugging
+          if (data.status === "success") {
+            console.log('data.message: ',data.message)
+            showThankYouPopup(data.message);
+            // Hide the modal after successful submission
+            $('.modal').fadeOut();
+          } else {
+            console.log('API Error:', data.message); // Log the error message if needed
+          }
+        })
+        .catch(function(error) {
+          console.log('Error:', error);
+        });
+    }
+
+    // Add event listener to submit the form
+    $('#quote-form').submit(handleSubmit);
+
+
 });
 
  if (navigator.geolocation) {

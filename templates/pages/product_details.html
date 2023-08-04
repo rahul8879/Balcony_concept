@@ -126,7 +126,7 @@
                                 <ul>
                                     {% for i in all_product%}
                                     <li>
-                                        <a href="#"><i aria-hidden="true"
+                                        <a href="{{i.get_url}}"><i aria-hidden="true"
                                                 class="icon icon-arrow-right-circle"></i>{{i.name}}</a>
                                     </li>
                                     {% endfor %}
