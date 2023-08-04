@@ -43,22 +43,16 @@ def quote_submit(request):
         # Retrieve other form fields
         # ...
 
-        # Create a pandas DataFrame with the collected data
-        data = pd.DataFrame({
-            'Name': [name],
-            'Mobile Number': [mobile_number],
-            # Other fields
-            # ...
-        })
-
         # Append the data to an existing Excel file
         # file_path = 'test.xlsx'
         # with pd.ExcelWriter(file_path, mode='a', engine='openpyxl') as writer:
         #     data.to_excel(writer, index=False, header=not writer.sheets)
 
-        return HttpResponse('Thank you for your submission!')
-
-    return HttpResponseBadRequest('Invalid request method.')
+        response_data = {
+            "status": "success",
+            "message": "We have received your information. Our dedicated team will promptly get in touch with you to assist you further. Thank you for choosing our services, and we look forward to providing you with an exceptional experience.",
+        }
+        return JsonResponse(response_data)
 
 
 def capture_location(request):

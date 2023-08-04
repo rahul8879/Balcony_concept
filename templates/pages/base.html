@@ -30,12 +30,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 
 <script>
+    
    
       // Toggle chat panel when the chat icon is clicked
         document.addEventListener('DOMContentLoaded', function () {
-            console.log('called 1')
             document.getElementById('chat-icon').addEventListener('click', function () {
-                console.log('called 2')
+                
                 var chatPanel = document.getElementById('chat-panel');
                 chatPanel.style.display = chatPanel.style.display === 'none' ? 'block' : 'none';
             });
@@ -91,7 +91,62 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
+    /* Style the second modal (thank you popup) */
+    .thank-you-modal {
+      display: none;
+      position: fixed;
+      z-index: 2;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      animation: fade-in 0.3s ease;
+    }
 
+    /* Style the second modal content */
+    .thank-you-modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 400px; /* Set a maximum width to make it device-friendly */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      animation: slide-up 0.5s ease;
+    }
+
+    /* "Thank You" text styling */
+    .thank-you-text {
+      font-size: 12px;
+      font-weight: inherit;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+   
+
+    /* Animation for fade-in */
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Animation for slide-up */
+    @keyframes slide-up {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
    /* Styles for the chat icon container */
     .chat-icon-container {
       display: flex;
@@ -122,7 +177,7 @@
 </style>
 
 
-    <title>Invisible Grill : </title>
+<title>Balcony Concept : You safety Partner </title>
 </head>
 
 <body class="home">
@@ -160,11 +215,7 @@
                                     <i aria-hidden="true" class="fas fa-search"></i>
                                 </a>
                             </div> -->
-                            <div class="offcanvas-menu d-inline-block">
-                                <a href="#">
-                                    <i aria-hidden="true" class="icon icon-burger-menu"></i>
-                                </a>
-                            </div>
+                         
                         </div>
                     </div>
                 </div>
@@ -231,7 +282,7 @@
                             <div class="modal-content">
                                 <span class="close">&times;</span>
                                 <h5>Please Fill below details</h5>
-                                <form method="POST" action="{% url 'quote_submit' %}">
+                                <form id="quote-form" method="POST" action="{% url 'quote_submit' %}">
                                     {% csrf_token %}
                                     <!-- Name field -->
                                     <input type="text" name="name" placeholder="Name" required><br>
@@ -246,6 +297,14 @@
                             </div>
                         </div>
                         <!-- Modal HTML ENds -->
+
+                        <div class="thank-you-modal" id="thankYouModal">
+                            <div class="thank-you-modal-content">
+                                <p class="thank-you-text"></p>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
